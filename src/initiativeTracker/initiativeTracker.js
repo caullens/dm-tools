@@ -131,6 +131,18 @@ function InitiativeTracker({players}) {
       setSelectableNPCs(updatedSelectableNPCs);
     }
   };
+  const handleAddNPCKeyUp = event => {
+    if (event.keyCode === 13 /* Enter Key */) {
+      if (addNPCValue === '') return;
+      if (!selectableNPCs.find(npc => npc === addNPCValue)) {
+        const updatedSelectableNPCs = [...selectableNPCs];
+        updatedSelectableNPCs.push(addNPCValue);
+        storage.setItem('selectableNPCs', JSON.stringify(updatedSelectableNPCs));
+        setSelectableNPCs(updatedSelectableNPCs);
+      }
+      setAddNPCValue('');
+    }
+  };
 
   function buildClassName(character, index) {
     let className = '';
@@ -203,6 +215,7 @@ function InitiativeTracker({players}) {
           )
         }}
         onChange={handleAddNPCChange}
+        onKeyUp={handleAddNPCKeyUp}
         placeholder="Add NPC..."
         value={addNPCValue}
         variant="outlined"
