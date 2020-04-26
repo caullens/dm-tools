@@ -77,21 +77,12 @@ function InitiativeTracker({players}) {
   const handleAddNPCChange = event => setAddNPCValue(event.target.value);
   const handleAddNPCClick = () => {
     if (addNPCValue === '') return;
-    const updatedCharactersInInitiative = [...charactersInInitiative];
-    const characterIndex = updatedCharactersInInitiative.filter(character => character.name === addNPCValue).length + 1;
-    const character = {
-      name: addNPCValue,
-      id: characterIndex
-    };
     if (!selectableNPCs.find(npc => npc === addNPCValue)) {
       const updatedSelectableNPCs = [...selectableNPCs];
       updatedSelectableNPCs.push(addNPCValue);
       storage.setItem('selectableNPCs', JSON.stringify(updatedSelectableNPCs));
       setSelectableNPCs(updatedSelectableNPCs);
     }
-    updatedCharactersInInitiative.push(character);
-    storage.setItem('charactersInInitiative', JSON.stringify(updatedCharactersInInitiative));
-    setCharactersInInitiative(updatedCharactersInInitiative);
     setAddNPCValue('');
   };
   const handleAddExistingNPCClick = npc => {
