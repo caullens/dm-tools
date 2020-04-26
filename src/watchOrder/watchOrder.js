@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Chip, Divider, makeStyles, Paper, Typography} from '@material-ui/core';
 
 import WatchOrderHeader from './watchOrderHeader';
@@ -22,15 +22,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const storage = window.localStorage;
+
 function WatchOrder({players}) {
   const classes = useStyles();
   const [playersInWatch, setPlayersInWatch] = useState([]);
+
+  useEffect(() => {
+    const watchOrderFromStorage = storage.getItem('watchOrder');
+    if (watchOrderFromStorage) {
+      setPlayersInWatch(JSON.parse(watchOrderFromStorage));
+    }
+  }, []);
 
   const handleAddPlayerClick = player => {
     if (playersInWatch.find(playerInWatch => playerInWatch.name === player.name)) return;
     const updatedPlayersInWatch = [...playersInWatch];
     updatedPlayersInWatch.push(player);
+    storage.setItem('watchOrder', JSON.stringify(updatedPlayersInWatch));
     setPlayersInWatch(updatedPlayersInWatch);
+  };
+
+  const handleResetClick = () => {
+    setPlayersInWatch([]);
+    storage.setItem('watchOrder', JSON.stringify([]));
   };
 
   const selectablePlayers = players
@@ -38,7 +53,7 @@ function WatchOrder({players}) {
 
   return (
     <Paper className={classes.paper}>
-      <WatchOrderHeader onResetClick={() => setPlayersInWatch([])} />
+      <WatchOrderHeader onResetClick={handleResetClick} />
       <div className={classes.listContainer}>
         {playersInWatch.map((player, index) => (
           <Typography

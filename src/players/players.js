@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Button, makeStyles, Paper, Typography, List, ListItem, Grid} from '@material-ui/core';
+import {Button, makeStyles, Paper, Typography, List} from '@material-ui/core';
 import {Add} from '@material-ui/icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUsers} from '@fortawesome/free-solid-svg-icons';
 
 import NewPlayerForm from './newPlayerForm';
-import PlayerDetail from './playerDetail';
+import PlayerListItem from './playerListItem';
 
 const useStyles = makeStyles(theme => ({
   addButton: {
@@ -17,20 +17,11 @@ const useStyles = makeStyles(theme => ({
   listContainer: {
     marginTop: theme.spacing()
   },
-  listItem: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
   paper: {
     padding: theme.spacing()
   },
   noPlayersText: {
     fontStyle: 'italic'
-  },
-  playerName: {
-    marginRight: theme.spacing(2),
-    fontWeight: theme.typography.fontWeightBold,
-    minWidth: 'max-content'
   },
   playersIcon: {
     fontSize: '1.75rem',
@@ -48,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Players({players, onAddNewPlayer}) {
+function Players({players, onAddNewPlayer, onRemoveClick}) {
   const classes = useStyles();
   const [showNewPlayerForm, setShowNewPlayerForm] = useState(false);
 
@@ -70,19 +61,12 @@ function Players({players, onAddNewPlayer}) {
           {!(players && players.length)
             && <Typography align="center" color="textSecondary" className={classes.noPlayersText}>No players</Typography>}
           {players && players.length > 0 && players.map(player => (
-            <ListItem className={classes.listItem} key={player.name} divider>
-              <Typography
-                className={classes.playerName}
-                variant="h6">
-                {player.name}
-              </Typography>
-              <Grid container justify="space-between">
-                <PlayerDetail detail={player.armorClass} variant={PlayerDetail.variants.armorClass} />
-                <PlayerDetail detail={player.passivePerception} variant={PlayerDetail.variants.passivePerception} />
-                <PlayerDetail detail={player.movementSpeed} variant={PlayerDetail.variants.movementSpeed} />
-                <PlayerDetail detail={player.weight} variant={PlayerDetail.variants.weight} />
-              </Grid>
-            </ListItem>
+            <PlayerListItem
+              key={player.name}
+              player={player}
+              onEditClick={() => null}
+              onRemoveClick={onRemoveClick}
+            />
           ))}
         </List>
         {showNewPlayerForm
