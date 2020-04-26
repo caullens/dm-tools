@@ -3,6 +3,7 @@ import {Grid, makeStyles} from '@material-ui/core';
 
 import InitiativeTracker from './initiativeTracker/initiativeTracker';
 import MarchingOrder from './marchingOrder/marchingOrder';
+import Memos from './memos/memos';
 import Players from './players/players';
 import WatchOrder from './watchOrder/watchOrder';
 
@@ -51,12 +52,17 @@ function App() {
 
   return (
     <Grid container>
-      <div className={classes.container}>
-        <Players
-          players={players}
-          onAddNewPlayer={handleAddNewPlayer}
-          onRemoveClick={handleRemoveClick}
-        />
+      <div>
+        <div className={classes.container}>
+          <Players
+            players={players}
+            onAddNewPlayer={handleAddNewPlayer}
+            onRemoveClick={handleRemoveClick}
+          />
+        </div>
+        <div className={classes.container}>
+          <Memos />
+        </div>
       </div>
       <div className={classes.container}>
         <InitiativeTracker players={players} />
