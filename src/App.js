@@ -1,25 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Grid, makeStyles} from '@material-ui/core';
+
+import InitiativeTracker from './initiativeTracker/initiativeTracker';
+import Players from './players/players';
+
+const useStyles = makeStyles(theme => ({
+  playersContainer: {
+    width: '464px',
+    margin: theme.spacing(1)
+  },
+  initiativeContainer: {
+    width: '464px',
+    margin: theme.spacing(1)
+  }
+}));
 
 function App() {
+  const classes = useStyles();
+
+  const [players, setPlayers] = useState([]);
+
+  const handleAddNewPlayer = newPlayer => {
+    if (!newPlayer) return;
+    setPlayers(existingPlayers => {
+      const updatedPlayers = [...existingPlayers];
+      updatedPlayers.push(newPlayer);
+      return updatedPlayers;
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container>
+      <div className={classes.playersContainer}>
+        <Players players={players} onAddNewPlayer={handleAddNewPlayer} />
+      </div>
+      <div className={classes.initiativeContainer}>
+        <InitiativeTracker players={players} />
+      </div>
+    </Grid>
   );
 }
 
