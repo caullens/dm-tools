@@ -16,10 +16,11 @@ const useStyles = makeStyles(theme => ({
   },
   selectablesArea: {
     height: '96px',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    marginTop: theme.spacing(0.5)
   },
   chip: {
-    margin: theme.spacing()
+    margin: theme.spacing(0.5)
   },
   addIcon: {
     cursor: 'pointer'

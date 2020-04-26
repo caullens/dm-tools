@@ -29,6 +29,7 @@ module.exports = {
     "object-curly-newline": "off",
     "max-len": ["error", { "code": 128 }],
     "react/prop-types": "off",
-    "react/jsx-closing-bracket-location": "off"
+    "react/jsx-closing-bracket-location": "off",
+    "linebreak-style": "off"
   }
 };
