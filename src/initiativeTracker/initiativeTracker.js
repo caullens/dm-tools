@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
-import {Chip, Divider, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Button} from '@material-ui/core';
-import {Add, NavigateNext, Remove, Replay} from '@material-ui/icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faDungeon} from '@fortawesome/free-solid-svg-icons';
+import {Chip, Divider, makeStyles, Paper, TextField, Typography, InputAdornment} from '@material-ui/core';
+import {Add} from '@material-ui/icons';
+
+import InitiativeTrackerActions from './initiativeTrackerActions';
+import InitiativeTrackerHeader from './initiativeTrackerHeader';
 
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing()
-  },
-  initiativeIcon: {
-    fontSize: '1.75rem',
-    marginRight: theme.spacing()
   },
   listContainer: {
     height: '397px',
@@ -27,12 +24,6 @@ const useStyles = makeStyles(theme => ({
   addIcon: {
     cursor: 'pointer'
   },
-  title: {
-    marginBottom: theme.spacing()
-  },
-  actions: {
-    marginTop: theme.spacing()
-  },
   selectedCharacter: {
     backgroundColor: theme.palette.background.default,
     borderRadius: '4px'
@@ -40,9 +31,6 @@ const useStyles = makeStyles(theme => ({
   deadCharacter: {
     textDecoration: 'line-through',
     color: theme.palette.text.secondary
-  },
-  roundCount: {
-    alignSelf: 'center'
   }
 }));
 
@@ -126,32 +114,13 @@ function InitiativeTracker({players}) {
 
   return (
     <Paper className={classes.paper}>
-      <Grid className={classes.title} container justify="space-between">
-        <div>
-          <FontAwesomeIcon className={classes.initiativeIcon} icon={faDungeon} />
-          <Typography display="inline" variant="h4">Initiative Tracker</Typography>
-        </div>
-        <Button endIcon={<Replay />} onClick={handleResetClick} size="small" variant="outlined">Reset</Button>
-      </Grid>
-      <Grid className={classes.actions} container justify="space-between">
-        <Button
-          color="primary"
-          disabled={!charactersInInitiative.length}
-          startIcon={<Remove />}
-          onClick={handleRemoveClick}
-          variant="outlined">
-          Remove
-        </Button>
-        <Typography className={classes.roundCount}>{`Round ${roundCount}`}</Typography>
-        <Button
-          color="primary"
-          disabled={!charactersInInitiative.length}
-          endIcon={<NavigateNext />}
-          onClick={() => incrementTurnIndex()}
-          variant="outlined">
-          Next
-        </Button>
-      </Grid>
+      <InitiativeTrackerHeader onResetClick={handleResetClick} />
+      <InitiativeTrackerActions
+        disabled={!charactersInInitiative.length}
+        onNextClick={() => incrementTurnIndex()}
+        onRemoveClick={handleRemoveClick}
+        roundCount={roundCount}
+      />
       <div className={classes.listContainer}>
         {charactersInInitiative.map((character, index) => (
           <Typography

@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Button, makeStyles, Paper, Typography, List, ListItem, Grid, Tooltip} from '@material-ui/core';
+import {Button, makeStyles, Paper, Typography, List, ListItem, Grid} from '@material-ui/core';
 import {Add} from '@material-ui/icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEye, faShieldAlt, faRunning, faUsers, faWeight} from '@fortawesome/free-solid-svg-icons';
+import {faUsers} from '@fortawesome/free-solid-svg-icons';
 
 import NewPlayerForm from './newPlayerForm';
+import PlayerDetail from './playerDetail';
 
 const useStyles = makeStyles(theme => ({
   addButton: {
@@ -26,15 +27,10 @@ const useStyles = makeStyles(theme => ({
   noPlayersText: {
     fontStyle: 'italic'
   },
-  playerData: {
+  playerName: {
+    marginRight: theme.spacing(2),
     fontWeight: theme.typography.fontWeightBold,
     minWidth: 'max-content'
-  },
-  playerName: {
-    marginRight: theme.spacing(2)
-  },
-  icon: {
-    fontSize: '1.25rem'
   },
   playersIcon: {
     fontSize: '1.75rem',
@@ -76,63 +72,15 @@ function Players({players, onAddNewPlayer}) {
           {players && players.length > 0 && players.map(player => (
             <ListItem className={classes.listItem} key={player.name} divider>
               <Typography
-                className={`${classes.playerData} ${classes.playerName}`}
+                className={classes.playerName}
                 variant="h6">
                 {player.name}
               </Typography>
               <Grid container justify="space-between">
-                <Grid item xs container justify="space-evenly" alignItems="center">
-                  <Tooltip title={<Typography variant="caption">Armor Class</Typography>}>
-                    <span>
-                      <FontAwesomeIcon className={classes.icon} icon={faShieldAlt} />
-                    </span>
-                  </Tooltip>
-                  <Typography
-                    className={classes.playerData}
-                    color="primary"
-                    variant="subtitle1">
-                    {player.armorClass}
-                  </Typography>
-                </Grid>
-                <Grid item xs container justify="space-evenly" alignItems="center">
-                  <Tooltip title={<Typography variant="caption">Passive Perception</Typography>}>
-                    <span>
-                      <FontAwesomeIcon className={classes.icon} icon={faEye} />
-                    </span>
-                  </Tooltip>
-                  <Typography
-                    className={classes.playerData}
-                    color="primary"
-                    variant="subtitle1">
-                    {player.passivePerception}
-                  </Typography>
-                </Grid>
-                <Grid item xs container justify="space-evenly" alignItems="center">
-                  <Tooltip title={<Typography variant="caption">Movement Speed</Typography>}>
-                    <span>
-                      <FontAwesomeIcon className={classes.icon} icon={faRunning} />
-                    </span>
-                  </Tooltip>
-                  <Typography
-                    className={classes.playerData}
-                    color="primary"
-                    variant="subtitle1">
-                    {player.movementSpeed}
-                  </Typography>
-                </Grid>
-                <Grid item xs container justify="space-evenly" alignItems="center">
-                  <Tooltip title={<Typography variant="caption">Weight</Typography>}>
-                    <span>
-                      <FontAwesomeIcon className={classes.icon} icon={faWeight} />
-                    </span>
-                  </Tooltip>
-                  <Typography
-                    className={classes.playerData}
-                    color="primary"
-                    variant="subtitle1">
-                    {player.weight}
-                  </Typography>
-                </Grid>
+                <PlayerDetail detail={player.armorClass} variant={PlayerDetail.variants.armorClass} />
+                <PlayerDetail detail={player.passivePerception} variant={PlayerDetail.variants.passivePerception} />
+                <PlayerDetail detail={player.movementSpeed} variant={PlayerDetail.variants.movementSpeed} />
+                <PlayerDetail detail={player.weight} variant={PlayerDetail.variants.weight} />
               </Grid>
             </ListItem>
           ))}
