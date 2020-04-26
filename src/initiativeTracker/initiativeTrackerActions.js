@@ -23,7 +23,7 @@ function InitiativeTrackerActions({disabled, onNextClick, onRemoveClick, roundCo
         variant="outlined">
         Remove
       </Button>
-      <Typography className={classes.rountCount}>Round {roundCount}</Typography>
+      <Typography className={classes.roundCount}>Round {roundCount}</Typography>
       <Button
         color="primary"
         disabled={disabled}
