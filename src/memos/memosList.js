@@ -3,7 +3,7 @@ import {List, ListItem, ListItemText, makeStyles, Typography} from '@material-ui
 
 const useStyles = makeStyles(theme => ({
   list: {
-    height: '450px',
+    height: '150px',
     overflowY: 'auto'
   },
   noMemoText: {
