@@ -30,6 +30,7 @@ module.exports = {
     "max-len": ["error", { "code": 128 }],
     "react/prop-types": "off",
     "react/jsx-closing-bracket-location": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/jsx-fragments": ["error", "element"]
   }
 };

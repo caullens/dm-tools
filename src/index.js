@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from '@material-ui/core';
 
-import App from './app';
+import App from './components/app';
 import theme from './theme';
 
 ReactDOM.render(
